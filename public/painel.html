@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cozinha - Painel</title>
+    <link rel="stylesheet" href="painel.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>👨‍🍳 Pedidos na Cozinha</h1>
+    <div id="grid-pedidos"></div>
+
+    <script>
+        const socket = io();
+        socket.on('receber_pedido', (dados) => {
+            const grid = document.getElementById('grid-pedidos');
+            const card = document.createElement('div');
+            card.className = "card-pedido";
+            card.innerHTML = `
+                <h2>MESA ${dados.mesa}</h2>
+                <ul class="lista-itens">${dados.pedido.map(i => `<li>• ${i}</li>`).join('')}</ul>
+                <button class="btn-concluir" onclick="this.parentElement.remove()">CONCLUIR</button>
+            `;
+            grid.prepend(card);
+            new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play();
+        });
+    </script>
+</body>
+</html>

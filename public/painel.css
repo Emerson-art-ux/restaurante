@@ -1,0 +1,51 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #1a1a1a;
+    color: white;
+    margin: 0;
+    padding: 40px;
+}
+
+h1 { color: #ff6b00; border-bottom: 2px solid #333; padding-bottom: 10px; }
+
+#grid-pedidos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.card-pedido {
+    background: white;
+    color: #333;
+    padding: 20px;
+    border-radius: 15px;
+    border-top: 8px solid #ff6b00;
+    animation: surgindo 0.4s ease-out;
+}
+
+@keyframes surgindo {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-pedido h2 { margin: 0; color: #ff6b00; font-size: 1.5em; }
+
+.lista-itens {
+    margin: 15px 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 500;
+}
+
+.btn-concluir {
+    width: 100%;
+    background: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-concluir:hover { background: #ff6b00; }

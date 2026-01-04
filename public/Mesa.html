@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital</title>
+    <link rel="stylesheet" href="mesa.css">
+    <script src="/socket.io/socket.io.js"></script>
+    
+</head>
+<body>
+
+    <div class="coluna-formulario">
+        <div class="header-mesa">
+            <h1 style="margin:0">Mesa <span id="numMesa">--</span></h1>
+            <p style="color:#666; font-weight: 500;">Selecione seus itens:</p>
+        </div>
+
+        <div id="cardapio">
+            <div class="item-card" onclick="toggleItem(this, 'Pizza Margherita')">
+                <div><b>🍕 Pizza Margherita</b><br><small>Manjericão e Mussarela</small></div>
+                <span style="color:#ff6b00; font-weight:bold;">+</span>
+            </div>
+
+            <div class="item-card" onclick="toggleItem(this, 'Hambúrguer Gourmet')">
+                <div><b>🍔 Burger Gourmet</b><br><small>Carne 180g e Cheddar</small></div>
+                <span style="color:#ff6b00; font-weight:bold;">+</span>
+            </div>
+
+            <div class="item-card" onclick="toggleItem(this, 'Soda Italiana')">
+                <div><b>🍹 Soda Italiana</b><br><small>Maçã Verde 400ml</small></div>
+                <span style="color:#ff6b00; font-weight:bold;">+</span>
+            </div>
+        </div>
+
+        <button id="btnEnviar" onclick="enviarPedido()">ENVIAR PEDIDO</button>
+    </div>
+
+    <script>
+        const socket = io();
+        const n = new URLSearchParams(window.location.search).get('n') || "1";
+        document.getElementById('numMesa').innerText = n;
+
+        let selecionados = [];
+
+        function toggleItem(elemento, nome) {
+            const index = selecionados.indexOf(nome);
+            if (index > -1) {
+                selecionados.splice(index, 1);
+                elemento.classList.remove('selecionado');
+            } else {
+                selecionados.push(nome);
+                elemento.classList.add('selecionado');
+            }
+        }
+
+        function enviarPedido() {
+            if (selecionados.length === 0) return alert("Selecione algo primeiro!");
+            socket.emit('fazer_pedido', { mesa: n, pedido: selecionados });
+            alert("Pedido enviado para a cozinha!");
+            location.reload(); 
+        }
+    </script>
+</body>
+</html>

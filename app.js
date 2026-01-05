@@ -1,17 +1,20 @@
-const express = require('express');
 const app = express();
 const path = require('path');
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, {
+    cors: {
+        origin: "*", // Permite que qualquer dispositivo (celular/PC) acesse
+        methods: ["GET", "POST"]
+    }
+});
 
-
-
+// 1. Serve os arquivos da pasta 'public' (CSS, imagens, HTMLs)
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// 2. Rota para o link principal (Envia para a mesa.html por padrão)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'mesa.html',));
-});
+    res.sendFile(path.join(__dirname, 'public', 'mesa.html'));
+});;
 
 io.on('connection', (socket) => {
     console.log('Um usuário se conectou');

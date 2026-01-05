@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'mesa.html', 'painel.html'));
+    res.sendFile(path.join(__dirname, 'public', 'mesa.html',));
 });
 
 io.on('connection', (socket) => {

@@ -4,7 +4,7 @@ const path = require('path');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
     cors: {
-        origin: "*", // Permite que qualquer dispositivo (celular/PC) acesse
+        origin: "*", 
         methods: ["GET", "POST"]
     }
 });

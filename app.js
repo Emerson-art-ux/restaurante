@@ -2,11 +2,15 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const http = require('http').createServer(app);
-const io = require('socket.io')(http, {
-    cors: {
-        origin: "*", 
-        methods: ["GET", "POST"]
-    }
+const io = require('socket.io')(http);
+
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'mesa.html', 'painel.html'));
 });
 
 io.on('connection', (socket) => {
